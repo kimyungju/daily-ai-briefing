@@ -18,4 +18,8 @@
 - 2026-02-07: Wired ConvexClientProvider into root layout for reactive queries.
 - 2026-02-07: Integrated Clerk auth — created ConvexClerkProvider wrapping ClerkProvider + ConvexProviderWithClerk.
 - 2026-02-07: Added convex/auth.config.ts for Clerk JWT verification.
+- 2026-02-07: Implemented Convex-based auth gating with Authenticated/Unauthenticated/AuthLoading in (root)/layout.tsx.
+- 2026-02-07: Created sign-in and sign-up catch-all pages under (auth) using Clerk components.
+- 2026-02-07: Switched ConvexClerkProvider to use @clerk/nextjs instead of @clerk/clerk-react.
+- 2026-02-07: Added CLERK_SIGN_IN_URL and CLERK_SIGN_UP_URL env vars.
 
