@@ -1,9 +1,19 @@
-import React from 'react'
+"use client";
+
+import { useUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
+import LoaderSpinner from "@/components/LoaderSpinner";
 
 const Profile = () => {
-  return (
-    <div>Profile</div>
-  )
-}
+  const { user, isLoaded } = useUser();
 
-export default Profile
+  if (!isLoaded) return <LoaderSpinner />;
+
+  if (user) {
+    redirect(`/profile/${user.id}`);
+  }
+
+  redirect("/sign-in");
+};
+
+export default Profile;

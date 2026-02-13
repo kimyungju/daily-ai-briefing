@@ -105,6 +105,31 @@ export const updatePodcastViews = mutation({
   },
 });
 
+export const getPodcastBySearch = query({
+  args: { search: v.string() },
+  handler: async (ctx, args) => {
+    if (args.search === "") {
+      return await ctx.db.query("podcasts").order("desc").collect();
+    }
+    return await ctx.db
+      .query("podcasts")
+      .withSearchIndex("search_title", (q) =>
+        q.search("podcastTitle", args.search)
+      )
+      .collect();
+  },
+});
+
+export const getPodcastByAuthorId = query({
+  args: { authorId: v.string() },
+  handler: async (ctx, args) => {
+    return await ctx.db
+      .query("podcasts")
+      .withIndex("by_authorId", (q) => q.eq("authorId", args.authorId))
+      .collect();
+  },
+});
+
 export const getUrl = mutation({
   args: {
     storageId: v.id("_storage"),
