@@ -1,4 +1,4 @@
-# Podcastr
+# Castory
 
 An AI-powered podcast platform that lets you create, discover, and listen to podcasts. Generate news podcasts from trending articles or create custom podcasts with AI-generated audio and cover art.
 

@@ -21,8 +21,8 @@ const crimsonPro = Crimson_Pro({
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Podcaster",
-  description: "Generate your podcasts using AI",
+  title: "Castory",
+  description: "AI-powered podcast platform for tech and cybersecurity news",
   icons: {
     icon: "/icons/logo.svg",
   },

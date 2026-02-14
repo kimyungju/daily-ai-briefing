@@ -24,7 +24,7 @@ const LeftSidebar = () => {
         >
           <Image src="/icons/logo.svg" alt="logo" width={23} height={27} />
           <h1 className="text-24 font-extrabold text-white max-lg:hidden">
-            Podcaster
+            Castory
           </h1>
         </Link>
 
