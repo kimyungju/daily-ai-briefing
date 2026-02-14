@@ -2,7 +2,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Loader, ImageIcon, Upload } from "lucide-react";
+import { Loader, ImageIcon, Upload, Trash2 } from "lucide-react";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import type { ChangeEvent } from "react";
@@ -35,7 +35,7 @@ const GenerateThumbnail = ({
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const getUrl = useMutation(api.podcast.getUrl);
 
-  const handleImage = async (blob: Blob, fileName: string) => {
+  const handleImage = async (blob: Blob) => {
     try {
       const uploadUrl = await generateUploadUrl();
 
@@ -86,7 +86,7 @@ const GenerateThumbnail = ({
       const imageData = await generateThumbnailAction({ prompt: imagePrompt });
 
       const blob = new Blob([imageData], { type: "image/png" });
-      await handleImage(blob, `thumbnail-${Date.now()}.png`);
+      await handleImage(blob);
     } catch (error) {
       console.error("Error generating thumbnail:", error);
       toast.error(
@@ -106,7 +106,7 @@ const GenerateThumbnail = ({
     setImageStorageId(null);
     setImage("");
 
-    await handleImage(file, file.name);
+    await handleImage(file);
   };
 
   return (
@@ -236,6 +236,19 @@ const GenerateThumbnail = ({
             <h3 className="text-16 font-bold text-white-1 uppercase tracking-wide">
               Thumbnail Preview
             </h3>
+            <button
+              type="button"
+              className="ml-auto p-2 text-white-4 hover:text-red-500 hover:bg-red-500/10 transition-colors"
+              onClick={() => {
+                setImage("");
+                setImageStorageId(null);
+                if (imageRef.current) imageRef.current.value = "";
+                toast.success("Thumbnail removed");
+              }}
+              title="Remove thumbnail"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
           </div>
           <Image
             src={image}

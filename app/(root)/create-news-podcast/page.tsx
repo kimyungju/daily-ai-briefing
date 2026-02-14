@@ -92,7 +92,7 @@ const CreateNewsPodcast = () => {
   const createPodcast = useMutation(api.podcast.createPodcast);
 
   // --- Draft persistence ---
-  const DRAFT_KEY = "podcastr:draft:news-podcast";
+  const DRAFT_KEY = "castory:draft:news-podcast";
   const restoredRef = useRef(false);
 
   // Restore draft on mount

@@ -1,7 +1,7 @@
 "use node";
 
 import { action } from "./_generated/server";
-import { v } from "convex/values";
+import { v, ConvexError } from "convex/values";
 import OpenAI from "openai";
 
 const TTS_MAX_CHARS = 4096;
@@ -52,7 +52,7 @@ export const generateAudioAction = action({
     const apiKey = process.env.OPENAI_API_KEY;
 
     if (!apiKey) {
-      throw new Error("OPENAI_API_KEY is not set");
+      throw new ConvexError("OPENAI_API_KEY is not set");
     }
 
     const openai = new OpenAI({ apiKey });
@@ -89,7 +89,7 @@ export const generateThumbnailAction = action({
   args: { prompt: v.string() },
   handler: async (ctx, args) => {
     const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) throw new Error("OPENAI_API_KEY is not set");
+    if (!apiKey) throw new ConvexError("OPENAI_API_KEY is not set");
 
     const openai = new OpenAI({ apiKey });
     const response = await openai.images.generate({
@@ -101,7 +101,7 @@ export const generateThumbnailAction = action({
     });
 
     const url = response.data?.[0]?.url;
-    if (!url) throw new Error("No image URL returned");
+    if (!url) throw new ConvexError("No image URL returned");
 
     const imageResponse = await fetch(url);
     const buffer = await imageResponse.arrayBuffer();

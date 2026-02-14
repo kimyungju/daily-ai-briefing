@@ -70,7 +70,7 @@ const CreatePodcast = () => {
   });
 
   // --- Draft persistence ---
-  const DRAFT_KEY = "podcastr:draft:podcast";
+  const DRAFT_KEY = "castory:draft:podcast";
   const restoredRef = useRef(false);
 
   // Restore draft on mount
@@ -142,7 +142,7 @@ const CreatePodcast = () => {
       }
 
       // Create the podcast
-      const podcastId = await createPodcast({
+      await createPodcast({
         podcastTitle: data.podcastTitle,
         podcastDescription: data.podcastDescription,
         audioUrl,

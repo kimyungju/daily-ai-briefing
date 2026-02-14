@@ -1,7 +1,7 @@
 "use node";
 
 import { action } from "./_generated/server";
-import { v } from "convex/values";
+import { v, ConvexError } from "convex/values";
 import OpenAI from "openai";
 
 export const fetchNewsForTopic = action({
@@ -9,9 +9,9 @@ export const fetchNewsForTopic = action({
     topic: v.string(),
     articleCount: v.optional(v.number()),
   },
-  handler: async (ctx, args) => {
+  handler: async (_ctx, args) => {
     const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) throw new Error("OPENAI_API_KEY is not set");
+    if (!apiKey) throw new ConvexError("OPENAI_API_KEY is not set");
 
     const openai = new OpenAI({ apiKey });
     const count = args.articleCount ?? 5;
@@ -24,7 +24,7 @@ export const fetchNewsForTopic = action({
 
     const text = response.output_text;
     const jsonMatch = text.match(/\[[\s\S]*\]/);
-    if (!jsonMatch) throw new Error("Failed to parse news articles from search results");
+    if (!jsonMatch) throw new ConvexError("Failed to parse news articles from search results");
 
     return JSON.parse(jsonMatch[0]);
   },
@@ -44,9 +44,9 @@ export const generateNewsScript = action({
     tone: v.optional(v.string()),
     duration: v.optional(v.string()),
   },
-  handler: async (ctx, args) => {
+  handler: async (_ctx, args) => {
     const apiKey = process.env.OPENAI_API_KEY;
-    if (!apiKey) throw new Error("OPENAI_API_KEY is not set");
+    if (!apiKey) throw new ConvexError("OPENAI_API_KEY is not set");
 
     const openai = new OpenAI({ apiKey });
 
